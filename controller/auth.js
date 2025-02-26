@@ -69,29 +69,37 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { phone_number, password } = req.body;
-    console.log(phone_number, password);
+    console.log(phone_number); // Only log necessary data
     const driver = await Drive.findOne({ phone_number });
-    if (!driver)
-      return res
-        .status(400)
-        .json({ error: "Invalid phone number or password" });
-        console.log(phone_number)
 
-    const isMatch =  password === driver.password_hash;
+    console.log(driver)
+
+    if (!driver) {
+      return res.status(401).json({ error: "Invalid phone number or password" });
+    }
+    // bcrypt.compareSync(password, driver.password_hash);
+    const isMatch = password === driver.password_hash
     console.log(isMatch);
     console.log(driver._id);
-    if (!isMatch)
-      return res
-        .status(400)
-        .json({ error: "Invalid phone number or password" });
-    console.log(driver._d);
 
+    if (!isMatch) {
+      return res.status(401).json({ error: "Invalid phone number or password" });
+    }
+
+    // Generate token
     const token = generateToken(driver._id);
-    res.json({ message: "Login successful", token, id:driver._id});
+
+    res.json({
+      message: "Login successful",
+      token,
+      id: driver._id
+    });
   } catch (error) {
+    console.error(error); // Log the error for debugging purposes
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
 exports.verifyOTP = async (req, res) => {
   try {
