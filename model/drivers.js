@@ -19,7 +19,7 @@ const driverSchema = new mongoose.Schema({
   wallet: { type: Number, default: 0 }, 
   zone: { type: String },
   overall_ratings: { type: Number, min: 0, max: 5 },
-  no_of_ratings: { type: Number, default: 0 }, 
+  no_of_ratings: { type: Number }, 
   otp: { type: String },
   status: { type: String, default: 'inactive', enum: ['active', 'suspended', 'inactive'] },
   referral_code: { type: String },

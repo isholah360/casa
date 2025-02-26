@@ -20,6 +20,8 @@ app.use('/api/drivers', require('./routes/locationRoute'));
 app.use('/api/drivers', require('./routes/earningRoute'));
 app.use('/api/drivers', require('./routes/notificationRoute'));
 
+
+
 // Connect to MongoDB
 casaDb()
 

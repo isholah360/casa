@@ -69,8 +69,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { phone_number, password } = req.body;
-    console.log(phone_number); // Only log necessary data
-    const driver = await Drive.findOne({ phone_number });
+    const driver = await Drive.findOne({ phone_number:phone_number });
 
     console.log(driver)
 
@@ -85,9 +84,6 @@ exports.login = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ error: "Invalid phone number or password" });
     }
-
-    // Generate token
-
 
     res.json({
       message: "Login successful",
