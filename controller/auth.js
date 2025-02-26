@@ -87,11 +87,10 @@ exports.login = async (req, res) => {
     }
 
     // Generate token
-    const token = generateToken(driver._id);
+
 
     res.json({
       message: "Login successful",
-      token,
       id: driver._id
     });
   } catch (error) {
