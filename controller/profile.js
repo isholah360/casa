@@ -161,11 +161,11 @@ exports.updateProfile = async (req, res) => {
 
   console.log('Request Body:', req.body);
   console.log('Files in request:', req.files);
-  
+
   try {
     const updates = {};
 
-    // Check if there are updates for phone_number
+    
     if (req.body.phone_number) {
       const existingDriverWithPhoneNumber = await Drive.findOne({ phone_number: req.body.phone_number });
       if (existingDriverWithPhoneNumber && existingDriverWithPhoneNumber._id.toString() !== req.params.id) {
@@ -189,7 +189,7 @@ exports.updateProfile = async (req, res) => {
       }
     }
 
-    // Handle other fields for update
+   
     if (req.body.gender) updates.gender = req.body.gender;
     if (req.body.date_of_birth) updates.date_of_birth = req.body.date_of_birth;
     if (req.body.address) updates.address = req.body.address;
@@ -202,8 +202,13 @@ exports.updateProfile = async (req, res) => {
     if (req.body.wallet) updates.wallet = req.body.wallet;
     if (req.body.overall_ratings) updates.overall_ratings = req.body.overall_ratings;
     if (req.body.no_of_ratings) updates.no_of_ratings = req.body.no_of_ratings;
+    if (req.body.online_status) updates.online_status = req.body.online_status;
+    if (req.body.otp) updates.otp = req.body.otp;
+    if (req.body.referred_by) updates.referred_by = req.body.referred_by;
+    if (req.body.referral_code) updates.referral_code = req.body.referral_code;
+    if (req.body.status) updates.status = req.body.status;
 
-    // Initialize the upload promises array
+    
     let uploadPromises = [];
 
     console.log('Received files:', req.files);
@@ -213,7 +218,7 @@ exports.updateProfile = async (req, res) => {
 
     for (let field of imageFields) {
       if (req.files && req.files[field] && req.files[field][0]) {
-        console.log(`Uploading ${field}:`, req.files[field][0].originalname);  // Log file being uploaded
+        console.log(`Uploading ${field}:`, req.files[field][0].originalname);  
         uploadPromises.push(
           uploadImageToCloudinary(req.files[field][0]).then(uploadResult => {
             updates[field] = uploadResult.secure_url;
@@ -227,10 +232,10 @@ exports.updateProfile = async (req, res) => {
 
     await Promise.all(uploadPromises); 
 
-    // Wait for all the file uploads to complete
+    
     await Promise.all(uploadPromises);
 
-    // Handle the other fields and set defaults if necessary
+    
     if (!req.body.id_proof_status) updates.id_proof_status = 'pending';  
     if (!req.body.online_status) updates.online_status = 'offline';     
     if (req.body.status) updates.status = req.body.status;
@@ -239,7 +244,7 @@ exports.updateProfile = async (req, res) => {
     if (!req.body.no_of_ratings) updates.no_of_ratings = 0;
     if (!req.body.overall_ratings) updates.overall_ratings = 0;
 
-    // Update the driver profile in the database
+   
     const driver = await Drive.findByIdAndUpdate(req.params.id, updates, { new: true });
 
     if (!driver) {
