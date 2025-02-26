@@ -26,7 +26,7 @@ exports.register = async (req, res) => {
 
     const existingDriver = await Drive.findOne({ phone_number });
     if (existingDriver)
-      return res.status(400).json({ error: "Phone number already registered" });
+      return res.status(400).json({ message: "Phone number already registered" });
 
 
     const driver = new Drive({
@@ -62,7 +62,7 @@ exports.register = async (req, res) => {
     });
   } catch (error) {
     console.error(error); // Log the error for debugging
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -85,7 +85,7 @@ exports.login = async (req, res) => {
     console.log(driver._id);
 
     const token = generateToken(driver._id);
-    res.json({ message: "Login successful", token });
+    res.json({ message: "Login successful", token, id:driver._id});
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }

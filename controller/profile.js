@@ -23,13 +23,13 @@ exports.getProfile = async (req, res) => {
 };
 
 exports.getAllProfile = async (req, res) => {
-  const id =req.params 
+ 
   try {
-    const driver = await Drive.find().select('-password_hash');
+    const driver = await Drive.find();
     
     console.log(driver)
     if (!driver) return res.status(404).json({ error: 'Driver not found' });
-    res.json(driver);
+    res.status(200).json(driver);
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
   }

@@ -4,7 +4,8 @@ const { getProfile, updateProfile, getAllProfile } = require('../controller/prof
 const { verifyToken } = require('../util/jwt');
 
 router.get('/profile/:id', getProfile);
-router.put('/profile/:id', updateProfile);
 router.get('/profile/all', getAllProfile);
+router.put('/profile/:id', updateProfile);
+
 
 module.exports = router;
