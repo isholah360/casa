@@ -5,6 +5,6 @@ const { verifyToken } = require('../util/jwt');
 
 router.get('/profile/:id', getProfile);
 router.put('/profile/:id', updateProfile);
-router.put('/profile/all', getAllProfile);
+router.get('/profile/all', getAllProfile);
 
 module.exports = router;
