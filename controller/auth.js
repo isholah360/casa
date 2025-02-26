@@ -1,5 +1,5 @@
 const Drive = require("../model/drivers");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const otpGenerator = require("otp-generator");
 const { generateToken } = require("../util/jwt");
@@ -77,8 +77,8 @@ exports.login = async (req, res) => {
     if (!driver) {
       return res.status(401).json({ error: "Invalid phone number or password" });
     }
-    // bcrypt.compareSync(password, driver.password_hash);
-    const isMatch = password === driver.password_hash
+    bcrypt.compareSync(password, driver.password_hash);
+    const isMatch = await bcrypt.compare(password, driver.password_hash);
     console.log(isMatch);
     console.log(driver._id);
 

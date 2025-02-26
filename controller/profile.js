@@ -1,6 +1,6 @@
 const Drive = require('../model/drivers');
 const cloudinary = require('cloudinary').v2;  
-const bcrypt = require('bcryptjs');  // For password hashing
+const bcrypt = require('bcrypt');  // For password hashing
 
 
 cloudinary.config({
@@ -102,7 +102,7 @@ exports.updateProfile = async (req, res) => {
     // If password is provided, hash it and update
     if (req.body.password) {
       try {
-        const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
         updates.password_hash = hashedPassword;
       } catch (passwordError) {
         console.error("Error hashing password:", passwordError);
