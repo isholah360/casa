@@ -149,7 +149,7 @@ exports.updateProfile = async (req, res) => {
     if (!req.body.overall_ratings) updates.overall_ratings = 0;
 
     // Update driver profile in the database
-    const driver = await Drive.findByIdAndUpdate(req.params.id, updates, { new: true }).select('-password_hash',);
+    const driver = await Drive.findByIdAndUpdate(req.params.id, updates, { new: true });
 
     if (!driver) {
       return res.status(404).json({ error: 'Driver not found' });
