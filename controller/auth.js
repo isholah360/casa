@@ -83,10 +83,10 @@ exports.login = async (req, res) => {
       return res
         .status(400)
         .json({ error: "Invalid phone number or password" });
-    console.log(driver._id);
+    console.log(driver._d);
 
-    const token = await generateToken(driver._id);
-    res.json({ message: "Login successful", token});
+    const token = generateToken(driver._id);
+    res.json({ message: "Login successful", token, id:driver._id});
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }

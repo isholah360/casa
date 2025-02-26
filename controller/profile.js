@@ -102,7 +102,7 @@ exports.updateProfile = async (req, res) => {
     // If password is provided, hash it and update
     if (req.body.password) {
       try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const hashedPassword = bcrypt.hashSync(req.body.password, 10);
         updates.password_hash = hashedPassword;
       } catch (passwordError) {
         console.error("Error hashing password:", passwordError);
