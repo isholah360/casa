@@ -76,15 +76,16 @@ exports.login = async (req, res) => {
         .status(400)
         .json({ error: "Invalid phone number or password" });
 
-    const isMatch = await bcrypt.compare(password, driver.password_hash);
+    const isMatch =  bcrypt.compareSync(password, driver.password_hash);
     console.log(isMatch);
+    console.log(driver._id);
     if (!isMatch)
       return res
         .status(400)
         .json({ error: "Invalid phone number or password" });
     console.log(driver._id);
 
-    const token = generateToken(driver._id);
+    const token = await generateToken(driver._id);
     res.json({ message: "Login successful", token});
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
