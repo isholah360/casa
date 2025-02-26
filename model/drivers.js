@@ -35,11 +35,6 @@ const driverSchema = new mongoose.Schema({
 });
 
 
-// Pre-save hook to hash password
-// driverSchema.pre('save', async function (next) {
-//   if (!this.isModified('password_hash')) return next();
-//   this.password_hash = await bcrypt.hash(this.password_hash, 10);
-//   next();
-// });
+
 
 module.exports = mongoose.model('Drive', driverSchema);

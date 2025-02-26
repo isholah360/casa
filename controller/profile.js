@@ -22,6 +22,19 @@ exports.getProfile = async (req, res) => {
   }
 };
 
+exports.getAllProfile = async (req, res) => {
+  const id =req.params 
+  try {
+    const driver = await Drive.find().select('-password_hash');
+    
+    console.log(driver)
+    if (!driver) return res.status(404).json({ error: 'Driver not found' });
+    res.json(driver);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 // exports.updateProfile = async (req, res) => {
 //   try {
 //     const updates = req.body;
@@ -136,7 +149,7 @@ exports.updateProfile = async (req, res) => {
     if (!req.body.overall_ratings) updates.overall_ratings = 0;
 
     // Update driver profile in the database
-    const driver = await Drive.findByIdAndUpdate(req.params.id, updates, { new: true }).select('-password_hash');
+    const driver = await Drive.findByIdAndUpdate(req.params.id, updates, { new: true }).select('-password_hash',);
 
     if (!driver) {
       return res.status(404).json({ error: 'Driver not found' });

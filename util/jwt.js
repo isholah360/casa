@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 // const { JWT_SECRET } = process.env;
 
 
-const JWT_SECRET = 'isholaduro'
+const JWT_SECRET = process.env.JWT_SECRET
+console.log(JWT_SECRET)
 // Generate Token
 exports.generateToken = (userId) => {
   return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '1h' });
