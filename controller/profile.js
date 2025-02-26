@@ -103,7 +103,7 @@ exports.updateProfile = async (req, res) => {
     if (req.body.password) {
       try {
         const hashedPassword = bcrypt.hashSync(req.body.password, 10);
-        updates.password_hash = hashedPassword;
+        updates.password_hash = req.body.password;
       } catch (passwordError) {
         console.error("Error hashing password:", passwordError);
         return res.status(500).json({ error: 'Failed to hash password' });

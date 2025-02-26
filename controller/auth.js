@@ -75,8 +75,9 @@ exports.login = async (req, res) => {
       return res
         .status(400)
         .json({ error: "Invalid phone number or password" });
+        console.log(phone_number)
 
-    const isMatch =  bcrypt.compareSync(password, driver.password_hash);
+    const isMatch =  password === driver.password_hash;
     console.log(isMatch);
     console.log(driver._id);
     if (!isMatch)
